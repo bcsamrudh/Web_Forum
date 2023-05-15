@@ -1,5 +1,7 @@
 # Web_Forum
 
+Note: This is still a work in progress.
+
 This is a web application built with Flask, SQLAlchemy, Bootstrap, CSS, and SQLite that allows users to post articles, get weather and news updates, create profiles, enable user authentication, and comment on posts.
 
 ## Getting Started
