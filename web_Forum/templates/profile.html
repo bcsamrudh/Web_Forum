@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .center {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+      }
+      .profile img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%
+        }
+      .media-body{
+        margin-left: 20px;
+      }
+      .profile{
+        margin-right: 20px;
+      }
+</style>
+<div class="center">
+    <article class="media content-section">
+      <div class="profile">
+          <img class="account-img" src="{{image_file}}">
+      </div>
+      <div class="media-body">
+            <h2 class="account-heading">{{ author }}</h2>
+            <p class="text-secondary">{{ bio }}</p>
+      </div>
+    </article>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Posts</th> 
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts%}
+        <tr>
+          <td><a class="article-title" href="{{url_for('blog_post',id=post.id)}}">{{blog.title}}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+{% endblock %}

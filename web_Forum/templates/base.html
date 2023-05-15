@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="static/style.css" rel="stylesheet"</link>
+    <title>Post-Anything</title>
+  </head>
+  <body>
+    <style>      
+      h1, h2, h3, h4, h5, h6 {
+        color: #444444;
+      }
+      
+      .bg-steel {
+        background-color: #5f788a;
+      }
+      
+      .site-header .navbar-nav .nav-link {
+        color: #cbd5db;
+      }
+      
+      .site-header .navbar-nav .nav-link:hover {
+        color: #ffffff;
+      }
+      
+      .site-header .navbar-nav .nav-link.active {
+        font-weight: 500;
+      }
+      
+      .content-section {
+        background: #ffffff;
+        padding: 10px 20px;
+        border: 1px solid #dddddd;
+        border-radius: 3px;
+        margin-bottom: 20px;
+      }
+      
+      .article-title {
+        color: #444444;
+      }
+      
+      a.article-title:hover {
+        color: #428bca;
+        text-decoration: none;
+      }
+      
+      .article-content {
+        white-space: pre-line;
+      }
+      
+      .article-img {
+        height: 65px;
+        width: 65px;
+        margin-right: 16px;
+      }
+      
+      .article-metadata {
+        padding-bottom: 1px;
+        margin-bottom: 4px;
+        border-bottom: 1px solid #e3e3e3
+      }
+      
+      .article-metadata a:hover {
+        color: #333;
+        text-decoration: none;
+      }
+      
+      .article-svg {
+        width: 25px;
+        height: 25px;
+        vertical-align: middle;
+      }
+    </style>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"style="background-color: #038cfc;">
+      {% if current_user.is_authenticated%}
+        <a class="navbar-brand" href="{{url_for('home_page')}}">Web-Forum</a>
+      {% endif %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            {% if  not current_user.is_authenticated%}
+            <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('signin')}}">SignIn</a>
+              </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('signup')}}">SignUp</a>
+              </li>
+              {% endif %}
+              {% if current_user.is_authenticated%}
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('create_a_post')}}">Create a Post</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+              </li>
+          </ul>
+          <form class="d-flex">
+            <a class="nav-link" href="{{url_for('profile_page',author=current_user.username)}}">Profile</a>
+          </form>
+          {% endif %}
+      </nav>
+      <main role="main" class="container">
+        <div class="row">
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+        </div>
+      </main>
+    <br>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

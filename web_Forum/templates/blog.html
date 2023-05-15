@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container blog-page">
+    <a class="mr-2" href="{{url_for('home_page')}}">Go to Home Page</a>
+    {% if blog.poster.username == user %}
+    <div>
+      <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+    </div>
+    {% endif %}
+    <h1>{{blog.title}}</h1><br>
+    <p>{{blog.desc}}</p>
+    <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Comments</th> 
+                <th scope="col">Author </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for comment in comments%}
+              <tr>
+                <td>{{comment.comment}}</td>
+                <td><a class="mr-2" href="{{url_for("profile_page",author=comment.comment_author)}}">{{comment.comment_author}}</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+    </table>
+    <form nonce="{{ nonce }}" id="comment-form" action='{{url_for("blog_post",id=blog.id)}}' method='post'>
+        <div class="form-group col-md-6">
+        {{ form.csrf_token }}
+        {{ form.comment.label }} {{ form.comment(class="form-control") }}
+        <br>
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+    </form>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="{{ url_for('delete_post', id=blog.id) }}"  id="deleteForm" method="POST">
+              <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+          </div>
+        </div>
+      </div>
+</div>
+{% endblock %}
